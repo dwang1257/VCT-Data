@@ -30,9 +30,10 @@ public class PlayerService {
 
     public List<Player> getPlayerByName(String searchText){
         return playerRepository.findAll().stream()
-                .filter(player -> player.getName().toLowerCase().contains(searchText.toLowerCase()))
+                .filter(player -> player.getName().toLowerCase().equals(searchText.toLowerCase()))
                 .collect(Collectors.toList());
     }
+
 
     public List<Player> getPlayersWithAcsAbove(double threshold) {
         return playerRepository.findAll().stream()
