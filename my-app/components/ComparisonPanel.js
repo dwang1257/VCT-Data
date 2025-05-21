@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { colors } from '@/lib/colors';
 
-export default function ComparisonPanel({p1, setP1, p2, setP2 }) {
+export default function ComparisonPanel({visible, p1, setP1, p2, setP2 }) {
+  if (!visible) return null;
   return (
     <div className="p-4 shadow-md" style={{ backgroundColor: colors.white }}>
       <div className="flex flex-wrap gap-4">
@@ -30,7 +31,7 @@ export default function ComparisonPanel({p1, setP1, p2, setP2 }) {
 function InputWithLabel({ label, value, placeholder, onChange}) {
   return (
     <div className="flex-1 min-w-64 relative">
-      <label className="block text-sm font-medium mb-1" style={{ color: colors.text }}>{label}</label>
+      <label className="block text-sm font-medium mb-1" style={{ color: colors.secondary }}>{label}</label>
       <input
         type="text"
         value={value}

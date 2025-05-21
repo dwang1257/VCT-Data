@@ -14,12 +14,13 @@ export default function DashboardPage() {
   const [p1, setP1] = useState({name: ''})
   const [p2, setP2] = useState({name: ''})
   const [showFilters, setShowFilters] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
   const [playerToDelete, setPlayerToDelete] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'acs', direction: 'desc' });
-    const comparisonPlayers = players.filter(
-      (player) =>
-        player.name.toLowerCase() === p1.name.toLowerCase() ||
-        player.name.toLowerCase() === p2.name.toLowerCase()
+  const comparisonPlayers = players.filter(
+     (player) =>
+       player.name.toLowerCase() === p1.name.toLowerCase() ||
+       player.name.toLowerCase() === p2.name.toLowerCase()
     );
 
 
@@ -59,7 +60,13 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
-      <Header showFilters={showFilters} toggleFilters={() => setShowFilters(!showFilters)} />
+      <Header
+        showFilters={showFilters}
+        toggleFilters={() => setShowFilters(!showFilters)}
+        showComparison={showComparison}
+        toggleComparison={() => setShowComparison(!showComparison)}
+      />
+
       <FilterPanel
         visible={showFilters}
         filter={filter}
@@ -69,6 +76,7 @@ export default function DashboardPage() {
         onDelete={handleDeletePlayer}
       />
       <ComparisonPanel
+        visible = {showComparison}
         p1 = {p1}
         setP1 = {setP1}
         p2 = {p2}
@@ -80,7 +88,12 @@ export default function DashboardPage() {
             <p className="text-xl" style={{ color: colors.text }}>Loading player stats...</p>
           </div>
         ) : (
-          <StatsGrid players={comparisonPlayers} sortedPlayers={comparisonPlayers} sortConfig={sortConfig} onSort={handleSort} />
+          <StatsGrid
+            players={comparisonPlayers.length === 2 ? comparisonPlayers : players}
+            sortedPlayers={comparisonPlayers.length === 2 ? comparisonPlayers : sortedPlayers}
+            sortConfig={sortConfig}
+            onSort={handleSort}
+          />
         )}
       </main>
     </div>
